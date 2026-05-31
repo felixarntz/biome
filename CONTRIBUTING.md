@@ -4,17 +4,11 @@ Thank you for your interest in contributing! We welcome bug reports, enhancement
 
 ## Opening issues
 
-If you find a bug, please [open a bug report issue](https://github.com/felixarntz/biome/issues/new?template=1-bug.yml), and complete and submit the form.
-
-## Suggesting Enhancements
-
-If you have a suggestion for improving an existing feature, please [open an enhancement request issue](https://github.com/felixarntz/biome/issues/new?template=2-enhancement.yml), and complete and submit the form.
-
-## Suggesting Features
-
-Do you have an idea for an entirely new feature that might fit into the scope of the AI Code Agents SDK? Feature suggestions are welcome!
-
-If your idea is mostly related to an existing feature, consider suggesting an enhancement instead (see above). But if your idea is something entirely new, please go ahead and [open a feature request issue](https://github.com/felixarntz/biome/issues/new?template=3-feature.yml), and complete and submit the form.
+- [Report a bug](https://github.com/felixarntz/biome/issues/new?template=1-bug.yml)
+- [Suggest an enhancement](https://github.com/felixarntz/biome/issues/new?template=2-enhancement.yml)
+- [Suggest a new feature](https://github.com/felixarntz/biome/issues/new?template=3-feature.yml)
+- [Suggest documentation improvements](https://github.com/felixarntz/biome/issues/new?template=4-documentation.yml)
+- [Ask a question](https://github.com/felixarntz/biome/issues/new?template=5-question.yml)
 
 ## Code Contributions
 
