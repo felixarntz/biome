@@ -1,0 +1,47 @@
+{
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15",
+    "husky": "^9.1.7",
+    "typescript": "^6.0.3",
+    "ultracite": "7.8.0"
+  },
+  "name": "@felixarntz/biome",
+  "scripts": {
+    "build": "node scripts/generate-all.mjs",
+    "test": "node scripts/generate-all.mjs && node test/run.mjs",
+    "typecheck": "tsc --noEmit",
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "prepublishOnly": "node scripts/generate-all.mjs && tsc --noEmit && node test/run.mjs",
+    "prepare": "husky"
+  },
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Reusable Biome (GritQL) lint rules that make your agent produce better code in fewer review cycles.",
+  "license": "MIT",
+  "packageManager": "pnpm@11.1.3",
+  "author": "Felix Arntz",
+  "keywords": [
+    "biome",
+    "biomejs",
+    "gritql",
+    "lint",
+    "rules",
+    "linter",
+    "plugin"
+  ],
+  "files": [
+    "rules/",
+    "types/",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    "./object-hasown": {
+      "types": "./types/object-hasown/index.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
