@@ -22,6 +22,10 @@ const biomeBin = join(
 const cases = [
   { rule: "no-as-unknown-as", needle: "Double assertions through" },
   { rule: "no-in-operator", needle: "instead of the `in` operator" },
+  {
+    rule: "prefer-object-parameter",
+    needle: "single object argument with named parameters",
+  },
 ];
 
 function lintFixtures() {

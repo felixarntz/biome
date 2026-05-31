@@ -6,6 +6,7 @@
 declare global {
   interface ObjectConstructor {
     hasOwn<O extends object, K extends PropertyKey>(
+      // biome-ignore lint/plugin/all: this mirrors the native `Object.hasOwn` signature, whose two positional parameters are fixed by the ECMAScript contract.
       o: O,
       v: K
     ): o is Extract<O, Record<K, unknown>> extends never

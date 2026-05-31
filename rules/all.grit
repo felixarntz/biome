@@ -9,5 +9,21 @@ or {
   },
   `$prop in $obj` as $expr where {
     register_diagnostic(span=$expr, message="Use `Object.hasOwn($obj, $prop)` instead of the `in` operator. `in` also walks the prototype chain, which is rarely the intended runtime check.")
+  },
+  or {
+    JsParameters(items = $params) where {
+      or {
+        $params <: [TsThisParameter(), $second, $third, ...],
+        and {
+          $params <: [$first, $second, ...],
+          $first <: not TsThisParameter()
+        }
+      },
+      register_diagnostic(span=$params, message="Use a single object argument with named parameters instead of multiple positional parameters. Object parameters keep call sites self-documenting and make argument order irrelevant.")
+    },
+    JsConstructorParameters(parameters = $params) where {
+      $params <: [$first, $second, ...],
+      register_diagnostic(span=$params, message="Use a single object argument with named parameters instead of multiple positional parameters. Object parameters keep call sites self-documenting and make argument order irrelevant.")
+    }
   }
 }
