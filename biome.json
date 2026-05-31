@@ -3,7 +3,7 @@
   "extends": ["ultracite/biome/core"],
   "plugins": ["./rules/all.grit"],
   "files": {
-    "includes": ["!test/fixtures"]
+    "includes": ["!test/fixtures", "!skills"]
   },
   "overrides": [
     {
