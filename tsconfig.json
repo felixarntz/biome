@@ -10,5 +10,9 @@
     "types": [],
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["types/**/*.d.ts", "test/types/**/*.test-d.ts"]
+  "include": [
+    "types/**/*.d.ts",
+    "test/types/**/*.test-d.ts",
+    "test/fixtures/**/*.ts"
+  ]
 }
