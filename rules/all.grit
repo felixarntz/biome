@@ -10,20 +10,51 @@ or {
   `$prop in $obj` as $expr where {
     register_diagnostic(span=$expr, message="Use `Object.hasOwn($obj, $prop)` instead of the `in` operator. `in` also walks the prototype chain, which is rarely the intended runtime check.")
   },
+  // Every arm below binds $params to a parameter items list, then the shared
+  // trailing where applies one multi-positional check and emits the diagnostic.
+  // The list is deliberately structural: it covers signatures whose author owns
+  // the parameter list -- named/declared functions, every method form (class,
+  // object, interface, abstract), constructors and construct signatures, function
+  // values assigned to a variable, and named function/constructor type aliases.
+  // It intentionally omits callback-shaped signatures whose parameter list is
+  // dictated by the API that calls them: arrow/function expressions passed inline
+  // (such as the reducer in arr.reduce(...)), object-property function values,
+  // class arrow fields, bare call signatures, and inline function types. Those
+  // cannot be rewritten to a single object parameter by the author, so flagging
+  // them only produces unfixable diagnostics.
+  //
+  // Grit parameterized pattern definitions do not compile in Biome, so the
+  // multi-positional check cannot be factored into a helper; the shared trailing
+  // where is how it stays written once.
   or {
-    JsParameters(items = $params) where {
-      or {
-        $params <: [TsThisParameter(), $second, $third, ...],
-        and {
-          $params <: [$first, $second, ...],
-          $first <: not TsThisParameter()
-        }
-      },
-      register_diagnostic(span=$params, message="Use a single object argument with named parameters instead of multiple positional parameters. Object parameters keep call sites self-documenting and make argument order irrelevant.")
+    JsFunctionDeclaration(parameters = JsParameters(items = $params)),
+    TsDeclareFunctionDeclaration(parameters = JsParameters(items = $params)),
+    JsMethodClassMember(parameters = JsParameters(items = $params)),
+    TsMethodSignatureClassMember(parameters = JsParameters(items = $params)),
+    JsMethodObjectMember(parameters = JsParameters(items = $params)),
+    TsMethodSignatureTypeMember(parameters = JsParameters(items = $params)),
+    TsConstructSignatureTypeMember(parameters = JsParameters(items = $params)),
+    JsConstructorParameters(parameters = $params),
+    JsVariableDeclarator(initializer = JsInitializerClause(expression = $fn)) where {
+      $fn <: or {
+        JsArrowFunctionExpression(parameters = JsParameters(items = $params)),
+        JsFunctionExpression(parameters = JsParameters(items = $params))
+      }
     },
-    JsConstructorParameters(parameters = $params) where {
-      $params <: [$first, $second, ...],
-      register_diagnostic(span=$params, message="Use a single object argument with named parameters instead of multiple positional parameters. Object parameters keep call sites self-documenting and make argument order irrelevant.")
+    TsTypeAliasDeclaration(ty = $aliased) where {
+      $aliased <: or {
+        TsFunctionType(parameters = JsParameters(items = $params)),
+        TsConstructorType(parameters = JsParameters(items = $params))
+      }
     }
+  } where {
+    or {
+      $params <: [TsThisParameter(), $second, $third, ...],
+      and {
+        $params <: [$first, $second, ...],
+        $first <: not TsThisParameter()
+      }
+    },
+    register_diagnostic(span=$params, message="Use a single object argument with named parameters instead of multiple positional parameters. Object parameters keep call sites self-documenting and make argument order irrelevant.")
   }
 }

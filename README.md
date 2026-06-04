@@ -8,7 +8,7 @@ Reusable [Biome](https://biomejs.dev) lint rules that make your agent produce be
 | --- | --- |
 | `no-as-unknown-as` | `value as unknown as T` double assertions, which bypass TypeScript's type checking entirely. |
 | `no-in-operator` | The `in` operator, recommending `Object.hasOwn(obj, prop)` (which does not walk the prototype chain). |
-| `prefer-object-parameter` | Functions, methods, and constructors with more than one positional parameter, recommending a single object argument with named parameters instead. A leading TypeScript `this` parameter is not counted. |
+| `prefer-object-parameter` | Functions, methods, and constructors with more than one positional parameter, recommending a single object argument with named parameters instead. A leading TypeScript `this` parameter is not counted. Inline callbacks, whose signature is dictated by the calling API, are left alone. |
 
 ## Installation
 
