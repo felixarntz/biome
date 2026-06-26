@@ -1,0 +1,5 @@
+language js
+
+`$obj.hasOwnProperty($...)` as $call where {
+  register_diagnostic(span=$call, message="Use `Object.hasOwn($obj, key)` instead of calling `hasOwnProperty()` on the object. The method can be missing on null-prototype objects or shadowed by user-controlled properties.")
+}

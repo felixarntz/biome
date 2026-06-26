@@ -7,8 +7,36 @@ or {
   `$value as unknown as $type` as $expr where {
     register_diagnostic(span=$expr, message="Avoid `as unknown as $type`. Double assertions through `unknown` bypass TypeScript's type checking entirely. Fix the underlying type mismatch instead.")
   },
-  `$prop in $obj` as $expr where {
-    register_diagnostic(span=$expr, message="Use `Object.hasOwn($obj, $prop)` instead of the `in` operator. `in` also walks the prototype chain, which is rarely the intended runtime check.")
+  `$items.reduce($reducer, {})` as $call where {
+    register_diagnostic(span=$call, message="Use `Object.create(null)` or `new Map()` instead of `{}` as a reducer accumulator. Plain object accumulators have a prototype chain that can leak into dynamic-key aggregation.")
+  },
+  `$obj.hasOwnProperty($...)` as $call where {
+    register_diagnostic(span=$call, message="Use `Object.hasOwn($obj, key)` instead of calling `hasOwnProperty()` on the object. The method can be missing on null-prototype objects or shadowed by user-controlled properties.")
+  },
+  or {
+    `$prop in $obj` as $expr,
+    JsForInStatement() as $expr
+  } where {
+    register_diagnostic(span=$expr, message="Avoid prototype-chain property checks and iteration. Use `Object.hasOwn($obj, $prop)` instead of the `in` operator, and `Object.keys()` or `Object.entries()` with `for...of` instead of `for...in`.")
+  },
+  `Object.assign($target, $...)` as $call where {
+    $target <: `{}`,
+    register_diagnostic(span=$call, message="Use `Object.assign(Object.create(null), ...)` instead of `Object.assign({}, ...)`. A plain object merge target has a prototype chain that can preserve prototype-pollution risk.")
+  },
+  `Object.fromEntries($...)` as $call where {
+    register_diagnostic(span=$call, message="Avoid `Object.fromEntries()` for dynamic keys. It creates a plain object with `Object.prototype`; use `Map`, a null-prototype helper, or explicit assignment into `Object.create(null)` instead.")
+  },
+  or {
+    `Object.setPrototypeOf($...)` as $call,
+    `Reflect.setPrototypeOf($...)` as $call
+  } where {
+    register_diagnostic(span=$call, message="Avoid mutating prototype chains with `setPrototypeOf()`. Prefer creating the intended shape up front with `Object.create(null)` or an explicit class/object model.")
+  },
+  or {
+    `$obj.__proto__` as $access,
+    `$obj.constructor.prototype` as $access
+  } where {
+    register_diagnostic(span=$access, message="Avoid direct prototype access through `__proto__` or `constructor.prototype`. These property paths are common prototype-pollution primitives; use explicit prototype APIs only in audited code.")
   },
   // Every arm below binds $params to a parameter items list, then the shared
   // trailing where applies one multi-positional check and emits the diagnostic.

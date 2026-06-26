@@ -1,0 +1,5 @@
+language js
+
+`Object.fromEntries($...)` as $call where {
+  register_diagnostic(span=$call, message="Avoid `Object.fromEntries()` for dynamic keys. It creates a plain object with `Object.prototype`; use `Map`, a null-prototype helper, or explicit assignment into `Object.create(null)` instead.")
+}

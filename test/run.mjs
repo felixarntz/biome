@@ -21,7 +21,22 @@ const biomeBin = join(
  */
 const cases = [
   { rule: "no-as-unknown-as", needle: "Double assertions through" },
-  { rule: "no-in-operator", needle: "instead of the `in` operator" },
+  {
+    rule: "no-empty-object-accumulator",
+    needle: "reducer accumulator",
+  },
+  { rule: "no-has-own-property", needle: "hasOwnProperty()" },
+  { rule: "no-in-operator", needle: "prototype-chain property checks" },
+  {
+    rule: "no-object-assign-target",
+    needle: "Object.assign({}, ...)",
+  },
+  { rule: "no-object-from-entries", needle: "Object.fromEntries()" },
+  { rule: "no-prototype-mutation", needle: "setPrototypeOf()" },
+  {
+    rule: "no-prototype-property-access",
+    needle: "direct prototype access",
+  },
   {
     rule: "prefer-object-parameter",
     needle: "single object argument with named parameters",

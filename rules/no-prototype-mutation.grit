@@ -1,0 +1,8 @@
+language js
+
+or {
+  `Object.setPrototypeOf($...)` as $call,
+  `Reflect.setPrototypeOf($...)` as $call
+} where {
+  register_diagnostic(span=$call, message="Avoid mutating prototype chains with `setPrototypeOf()`. Prefer creating the intended shape up front with `Object.create(null)` or an explicit class/object model.")
+}

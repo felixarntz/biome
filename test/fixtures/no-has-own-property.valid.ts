@@ -1,7 +1,4 @@
 declare const obj: Record<string, unknown>;
 
 export const hasKey = Object.hasOwn(obj, "key");
-
-for (const key of Object.keys(obj)) {
-  void key;
-}
+export const legacyHasKey = Object.prototype.hasOwnProperty.call(obj, "key");
