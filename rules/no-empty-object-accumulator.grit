@@ -1,0 +1,5 @@
+language js
+
+`$items.reduce($reducer, {})` as $call where {
+  register_diagnostic(span=$call, message="Use `Object.create(null)` or `new Map()` instead of `{}` as a reducer accumulator. Plain object accumulators have a prototype chain that can leak into dynamic-key aggregation.")
+}

@@ -1,0 +1,6 @@
+language js
+
+`Object.assign($target, $...)` as $call where {
+  $target <: `{}`,
+  register_diagnostic(span=$call, message="Use `Object.assign(Object.create(null), ...)` instead of `Object.assign({}, ...)`. A plain object merge target has a prototype chain that can preserve prototype-pollution risk.")
+}
