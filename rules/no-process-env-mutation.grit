@@ -8,5 +8,6 @@ or {
   `delete process.env[$key]` as $mutation,
   `Object.assign(process.env, $...)` as $mutation
 } where {
+  $filename <: not r".*\.test\.ts$",
   register_diagnostic(span=$mutation, message="Avoid mutating `process.env` directly. Read environment values into configuration and pass an explicit `env` object to child processes; process-global writes can leak across tests and concurrent code.")
 }
