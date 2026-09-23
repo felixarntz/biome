@@ -1,0 +1,8 @@
+language js
+
+or {
+  `...($condition ? {} : { $... })` as $spread,
+  `...($condition ? { $... } : {})` as $spread
+} where {
+  register_diagnostic(span=$spread, message="Avoid conditional object spreads. Build the object explicitly and assign optional properties conditionally.")
+}

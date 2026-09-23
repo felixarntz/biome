@@ -22,6 +22,10 @@ const biomeBin = join(
 const cases = [
   { rule: "no-as-unknown-as", needle: "Double assertions through" },
   {
+    rule: "no-conditional-object-spread",
+    needle: "conditional object spreads",
+  },
+  {
     rule: "no-empty-object-accumulator",
     needle: "reducer accumulator",
   },
@@ -36,6 +40,10 @@ const cases = [
   {
     rule: "no-prototype-property-access",
     needle: "direct prototype access",
+  },
+  {
+    rule: "no-process-env-mutation",
+    needle: "mutating `process.env` directly",
   },
   {
     rule: "prefer-object-parameter",
