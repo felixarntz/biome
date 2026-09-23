@@ -2,7 +2,6 @@
   "name": "@felixarntz/biome",
   "version": "0.2.0",
   "description": "Reusable Biome (GritQL) lint rules that make your agent produce better code in fewer review cycles.",
-  "license": "MIT",
   "keywords": [
     "biome",
     "biomejs",
@@ -12,39 +11,40 @@
     "linter",
     "plugin"
   ],
+  "homepage": "https://github.com/felixarntz/biome#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felixarntz/biome.git"
+  },
+  "license": "MIT",
   "type": "module",
+  "exports": {
+    "./object-hasown": {
+      "types": "./types/object-hasown/index.d.ts"
+    }
+  },
   "files": [
     "rules/",
     "types/",
     "README.md",
     "LICENSE"
   ],
-  "exports": {
-    "./object-hasown": {
-      "types": "./types/object-hasown/index.d.ts"
-    }
-  },
-  "homepage": "https://github.com/felixarntz/biome#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/felixarntz/biome.git"
-  },
-  "packageManager": "pnpm@11.1.3",
-  "devDependencies": {
-    "@biomejs/biome": "^2.4.15",
-    "husky": "^9.1.7",
-    "typescript": "^6.0.3",
-    "ultracite": "7.8.0"
-  },
   "scripts": {
     "build": "node scripts/generate-all.mjs",
-    "test": "node scripts/generate-all.mjs && node test/run.mjs",
-    "typecheck": "tsc --noEmit",
     "check": "ultracite check",
     "fix": "ultracite fix",
+    "prepare": "husky",
     "prepublishOnly": "node scripts/generate-all.mjs && tsc --noEmit && node test/run.mjs",
-    "prepare": "husky"
+    "test": "node scripts/generate-all.mjs && node test/run.mjs",
+    "typecheck": "tsc --noEmit"
   },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.14",
+    "husky": "^9.1.7",
+    "typescript": "^6.0.3",
+    "ultracite": "^7.12.0"
+  },
+  "packageManager": "pnpm@11.1.3",
   "publishConfig": {
     "access": "public",
     "provenance": true
