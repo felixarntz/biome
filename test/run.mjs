@@ -20,34 +20,34 @@ const biomeBin = join(
  * test resilient to wording tweaks while still binding each fixture to its rule.
  */
 const cases = [
-  { rule: "no-as-unknown-as", needle: "Double assertions through" },
+  { needle: "Double assertions through", rule: "no-as-unknown-as" },
   {
-    rule: "no-conditional-object-spread",
     needle: "conditional object spreads",
+    rule: "no-conditional-object-spread",
   },
   {
-    rule: "no-empty-object-accumulator",
     needle: "reducer accumulator",
+    rule: "no-empty-object-accumulator",
   },
-  { rule: "no-has-own-property", needle: "hasOwnProperty()" },
-  { rule: "no-in-operator", needle: "prototype-chain property checks" },
+  { needle: "hasOwnProperty()", rule: "no-has-own-property" },
+  { needle: "prototype-chain property checks", rule: "no-in-operator" },
   {
-    rule: "no-object-assign-target",
     needle: "Object.assign({}, ...)",
+    rule: "no-object-assign-target",
   },
-  { rule: "no-object-from-entries", needle: "Object.fromEntries()" },
-  { rule: "no-prototype-mutation", needle: "setPrototypeOf()" },
+  { needle: "Object.fromEntries()", rule: "no-object-from-entries" },
+  { needle: "setPrototypeOf()", rule: "no-prototype-mutation" },
   {
-    rule: "no-prototype-property-access",
     needle: "direct prototype access",
+    rule: "no-prototype-property-access",
   },
   {
-    rule: "no-process-env-mutation",
     needle: "mutating `process.env` directly",
+    rule: "no-process-env-mutation",
   },
   {
-    rule: "prefer-object-parameter",
     needle: "single object argument with named parameters",
+    rule: "prefer-object-parameter",
   },
 ];
 
@@ -66,7 +66,8 @@ function lintFixtures() {
   } catch (error) {
     // Biome exits non-zero whenever diagnostics are present; the JSON we need is
     // still on stdout. Only a missing/empty stdout is a real failure.
-    stdout = error.stdout;
+    const { stdout: errorStdout } = error;
+    stdout = errorStdout;
     if (!stdout) {
       throw error;
     }

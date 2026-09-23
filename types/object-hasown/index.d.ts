@@ -5,6 +5,7 @@
  */
 declare global {
   interface ObjectConstructor {
+    // biome-ignore lint/style/useConsistentMethodSignatures: Keep method syntax so TypeScript can add this narrowing overload to its built-in Object.hasOwn declaration.
     hasOwn<O extends object, K extends PropertyKey>(
       // biome-ignore lint/plugin/all: this mirrors the native `Object.hasOwn` signature, whose two positional parameters are fixed by the ECMAScript contract.
       o: O,

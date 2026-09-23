@@ -27,10 +27,10 @@ function parse(source) {
     if (HEADER_RE.test(lines[i])) {
       header.push(lines[i].trim());
     }
-    i++;
+    i += 1;
   }
   const body = lines.slice(i).join("\n").trim();
-  return { header: header.join("\n"), body };
+  return { body, header: header.join("\n") };
 }
 
 const files = readdirSync(rulesDir)
