@@ -42,6 +42,7 @@ const cases = [
     rule: "no-prototype-property-access",
   },
   {
+    ignored: "no-process-env-mutation.test.ts",
     needle: "mutating `process.env` directly",
     rule: "no-process-env-mutation",
   },
@@ -85,7 +86,7 @@ function pluginMessagesFor(fixture) {
 
 const failures = [];
 
-for (const { rule, needle } of cases) {
+for (const { rule, needle, ignored } of cases) {
   const invalid = `${rule}.invalid.ts`;
   const valid = `${rule}.valid.ts`;
 
@@ -102,6 +103,15 @@ for (const { rule, needle } of cases) {
     failures.push(
       `${rule}: expected "${valid}" to report no plugin diagnostics, but got: ${JSON.stringify(validMessages)}`
     );
+  }
+
+  if (ignored) {
+    const ignoredMessages = pluginMessagesFor(ignored);
+    if (ignoredMessages.length > 0) {
+      failures.push(
+        `${rule}: expected "${ignored}" to report no plugin diagnostics, but got: ${JSON.stringify(ignoredMessages)}`
+      );
+    }
   }
 }
 
