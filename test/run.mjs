@@ -77,7 +77,7 @@ const cases = [
   },
   {
     ignored: [],
-    needles: ["Prefer an optional property"],
+    needles: ["Do not include `null` or `undefined`"],
     rule: "require-optional-properties",
   },
   {

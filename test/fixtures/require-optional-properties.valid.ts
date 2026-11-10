@@ -1,6 +1,6 @@
 type AlreadyOptional = {
-  someField?: string | null;
-  anotherField?: string | undefined;
+  someField?: string;
+  anotherField?: string;
 };
 
 type NonNullishUnion = {

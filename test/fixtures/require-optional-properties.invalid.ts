@@ -18,6 +18,11 @@ interface InterfaceProperty {
   someField: undefined | string;
 }
 
+type OptionalNullishProperties = {
+  code?: number | null;
+  label?: string | undefined;
+};
+
 type FunctionPropertyWithOptionalParameter = {
   callback: (input?: string) => number | null;
 };

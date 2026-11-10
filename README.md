@@ -11,7 +11,7 @@ Rules cover aspects like type-safety escape hatches, prototype-chain-safe proper
 | Rule | What it flags |
 | --- | --- |
 | `require-object-parameter` | Functions, methods, and constructors with more than one positional parameter, requiring a single object argument with named parameters instead. A leading TypeScript `this` parameter is not counted. Inline callbacks, whose signature is dictated by the calling API, are left alone. |
-| `require-optional-properties` | Object-type properties that use `null` or `undefined` to represent a missing value instead of being optional. |
+| `require-optional-properties` | Object-type properties that use `null` or `undefined` to represent absence; use optional syntax and keep the property's value type non-nullish. |
 | `require-explicit-abort-property-names` | Properties typed as `AbortSignal` or `AbortController` that use vague names instead of a type-specific property name. |
 
 ### `correctness`
