@@ -11,6 +11,7 @@ Rules cover aspects like type-safety escape hatches, prototype-chain-safe proper
 | Rule | What it flags |
 | --- | --- |
 | `require-object-parameter` | Functions, methods, and constructors with more than one positional parameter, requiring a single object argument with named parameters instead. A leading TypeScript `this` parameter is not counted. Inline callbacks, whose signature is dictated by the calling API, are left alone. |
+| `require-optional-properties` | Object-type properties that use `null` or `undefined` to represent a missing value instead of being optional. |
 
 ### `correctness`
 
@@ -88,7 +89,8 @@ Some of the rules are more opinionated than others. So if you don't want to use 
     "./node_modules/@felixarntz/biome/rules/security/no-prototype-mutation.grit",
     "./node_modules/@felixarntz/biome/rules/security/no-prototype-property-access.grit",
     "./node_modules/@felixarntz/biome/rules/security/no-record-object-literal.grit",
-    "./node_modules/@felixarntz/biome/rules/api-design/require-object-parameter.grit"
+    "./node_modules/@felixarntz/biome/rules/api-design/require-object-parameter.grit",
+    "./node_modules/@felixarntz/biome/rules/api-design/require-optional-properties.grit"
   ]
 }
 ```

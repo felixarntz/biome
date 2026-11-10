@@ -57,6 +57,10 @@ const cases = [
     needle: "single object argument with named parameters",
     rule: "require-object-parameter",
   },
+  {
+    needle: "Prefer an optional property",
+    rule: "require-optional-properties",
+  },
 ];
 
 function lintFixtures() {

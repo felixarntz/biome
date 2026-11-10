@@ -50,5 +50,15 @@ or {
       }
     },
     register_diagnostic(span=$params, message="Use a single object argument with named parameters instead of multiple positional parameters. Object parameters keep call sites self-documenting and make argument order irrelevant.")
+  },
+  TsPropertySignatureTypeMember(
+    type_annotation = TsTypeAnnotation(ty = TsUnionType(types = $types))
+  ) as $property where {
+    $types <: or {
+      [..., TsNullLiteralType(), ...],
+      [..., TsUndefinedType(), ...]
+    },
+    $property <: not contains js"?",
+    register_diagnostic(span=$property, message="Prefer an optional property (`someField?: Type`) to a required property whose type includes `null` or `undefined`. This models absence in the property definition instead of adding nullish values to the property's value type.")
   }
 }
