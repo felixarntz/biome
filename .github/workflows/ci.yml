@@ -23,8 +23,8 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build # Build rules/all.grit
-      - run: git diff --exit-code rules/all.grit # Fail if rules/all.grit is out of date
+      - run: pnpm build # Build rule group bundles and rules/all.grit
+      - run: git diff --exit-code rules/*.grit # Fail if generated bundles are out of date
       - run: pnpm check
 
   typecheck:

@@ -30,12 +30,14 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "node scripts/generate-all.mjs",
+    "build": "pnpm build:groups && pnpm build:all",
+    "build:all": "node scripts/generate-all.mjs",
+    "build:groups": "node scripts/generate-groups.mjs",
     "check": "ultracite check",
     "fix": "ultracite fix",
     "prepare": "husky",
-    "prepublishOnly": "node scripts/generate-all.mjs && tsc --noEmit && node test/run.mjs",
-    "test": "node scripts/generate-all.mjs && node test/run.mjs",
+    "prepublishOnly": "pnpm build && tsc --noEmit && node test/run.mjs",
+    "test": "pnpm build && node test/run.mjs",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

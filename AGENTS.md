@@ -2,18 +2,19 @@
 
 `@felixarntz/biome` is an NPM package with reusable [Biome](https://biomejs.dev) lint rules that make your agent produce better code in fewer review cycles, written as [GritQL plugins](https://biomejs.dev/linter/plugins/).
 
-Projects can either include the GritQL plugins individually in their Biome config file, or they can reference `all.grit`, which bundles all plugins in one.
+Projects can include individual GritQL plugins, group bundles, or `all.grit` in their Biome config file.
 
 ## External Consumer-facing Package Structure
 
-- `rules/`: Contains each rule as a plugin file.
-    - The exception is the `all.grit` file which gets auto-generated based on all the other plugin files.
+- `rules/<group>/`: Contains the individual rule plugins for a group.
+- `rules/<group>.grit`: Generated bundle for that group. The folder name and the `.grit` file basename are identical.
+- `rules/all.grit`: Generated bundle containing every rule.
 - `types/`: Supplemental type declarations that help with certain rules.
 
 ## Workflow Commands
 
 - `pnpm install` — install dependencies
-- `pnpm build` — (re-)generate the `plugins/all.grit` file
+- `pnpm build` — (re-)generate all group bundles and `rules/all.grit`
 - `pnpm typecheck` — run TypeScript type checking
 - `pnpm test` — run fixture tests for each rule
 - `pnpm check` — lint/format check via Ultracite

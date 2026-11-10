@@ -9,12 +9,12 @@ metadata:
 
 You should already have relevant context covering the package structure, workflow commands (`pnpm build`/`test`/`typecheck`/`check`), and testing requirements. Quick recap:
 
-- **Rule location:** Rules are [GritQL plugins](https://biomejs.dev/linter/plugins/) for [Biome](https://biomejs.dev), located in the `rules/` folder.
+- **Rule location:** Rules are [GritQL plugins](https://biomejs.dev/linter/plugins/) for [Biome](https://biomejs.dev), located in `rules/<group>/` (`api-design`, `correctness`, or `security`).
 - **Test coverage:** Every rule needs exactly two fixtures: `test/fixtures/{rule}.valid.ts` (must produce no diagnostic) and `test/fixtures/{rule}.invalid.ts` (must trigger it). Register the rule in `test/run.mjs` with a stable substring of its message.
 
 ## Best Practices
 
-- Run `ls rules` and read 2–3 existing `.grit` files before writing. Match their structure, naming, and diagnostic-message style (a concrete recommendation plus the reasoning behind it). `all.grit` is generated — never hand-edit it; run `pnpm build`.
+- Read 2–3 existing `.grit` files from the relevant group before writing. Match their structure, naming, and diagnostic-message style (a concrete recommendation plus the reasoning behind it). Group bundles and `all.grit` are generated — never hand-edit them; run `pnpm build`.
 - In the fixtures, cover alternative condition for the rule: A rule with no `or` usage (i.e. a single condition) needs 1 pass and 1 fail scenario, a rule with 2 `or` operands needs 2 pass and 2 fail scenarios, a rule with 3 `or` operands needs 3 pass and 3 fail scenarios, etc.
 
 ## Important: Update `README.md`

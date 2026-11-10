@@ -14,13 +14,13 @@ Thank you for your interest in contributing! We welcome bug reports, enhancement
 
 ```sh
 pnpm install
-pnpm build     # regenerate rules/all.grit from rules/*.grit
+pnpm build     # regenerate group bundles and rules/all.grit
 pnpm test      # build, then assert each rule fires on invalid fixtures and is silent on valid ones
 pnpm typecheck # type-check the Object.hasOwn augmentation and its narrowing test
 pnpm check     # Biome lint + format on this repo
 ```
 
-Each rule lives in its own file under `rules/`. `rules/all.grit` is **generated** by `scripts/generate-all.mjs`, so never edit it by hand. To add a rule, drop a new `<name>.grit` into `rules/`, add a matching pair of `test/fixtures/<name>.{invalid,valid}.ts` fixtures plus a case in `test/run.mjs`, then run `pnpm test`.
+Each rule lives in its group's folder under `rules/`. The group bundles and `rules/all.grit` are **generated** by scripts in `scripts/`, so never edit them by hand. To add a rule, place a new `<name>.grit` in `rules/<group>/`, add a matching pair of `test/fixtures/<name>.{invalid,valid}.ts` fixtures plus a case in `test/run.mjs`, then run `pnpm test`.
 
 ### Pull Request Guidelines
 
