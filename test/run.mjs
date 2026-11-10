@@ -20,18 +20,29 @@ const biomeBin = join(
  * test resilient to wording tweaks while still binding each fixture to its rule.
  */
 const cases = [
-  { needle: "Double assertions through", rule: "no-as-unknown-as" },
   {
-    needle: "conditional object spreads",
+    ignored: [],
+    needles: ["Double assertions through"],
+    rule: "no-as-unknown-as",
+  },
+  {
+    ignored: [],
+    needles: ["conditional object spreads"],
     rule: "no-conditional-object-spread",
   },
   {
-    needle: "reducer accumulator",
+    ignored: [],
+    needles: ["reducer accumulator"],
     rule: "no-empty-object-accumulator",
   },
-  { needle: "hasOwnProperty()", rule: "no-has-own-property" },
-  { needle: "prototype-chain property checks", rule: "no-in-operator" },
+  { ignored: [], needles: ["hasOwnProperty()"], rule: "no-has-own-property" },
   {
+    ignored: [],
+    needles: ["prototype-chain property checks"],
+    rule: "no-in-operator",
+  },
+  {
+    ignored: [],
     needles: [
       "Use `Object.create(null)` instead of `{}`",
       "Object.assign(Object.create(null), <objectWithDataToAssign>)",
@@ -39,29 +50,38 @@ const cases = [
     rule: "no-record-object-literal",
   },
   {
-    needle: "Object.assign({}, ...)",
+    ignored: [],
+    needles: ["Object.assign({}, ...)"],
     rule: "no-object-assign-target",
   },
-  { needle: "Object.fromEntries()", rule: "no-object-from-entries" },
-  { needle: "setPrototypeOf()", rule: "no-prototype-mutation" },
   {
-    needle: "direct prototype access",
+    ignored: [],
+    needles: ["Object.fromEntries()"],
+    rule: "no-object-from-entries",
+  },
+  { ignored: [], needles: ["setPrototypeOf()"], rule: "no-prototype-mutation" },
+  {
+    ignored: [],
+    needles: ["direct prototype access"],
     rule: "no-prototype-property-access",
   },
   {
-    ignored: "no-process-env-mutation.test.ts",
-    needle: "mutating `process.env` directly",
+    ignored: ["no-process-env-mutation.test.ts"],
+    needles: ["mutating `process.env` directly"],
     rule: "no-process-env-mutation",
   },
   {
-    needle: "single object argument with named parameters",
+    ignored: [],
+    needles: ["single object argument with named parameters"],
     rule: "require-object-parameter",
   },
   {
-    needle: "Prefer an optional property",
+    ignored: [],
+    needles: ["Prefer an optional property"],
     rule: "require-optional-properties",
   },
   {
+    ignored: [],
     needles: [
       "Name `AbortSignal` properties `abortSignal`",
       "Name `AbortController` properties `abortController`",
@@ -104,12 +124,12 @@ function pluginMessagesFor(fixture) {
 
 const failures = [];
 
-for (const { rule, needle, needles, ignored } of cases) {
+for (const { rule, needles, ignored } of cases) {
   const invalid = `${rule}.invalid.ts`;
   const valid = `${rule}.valid.ts`;
 
   const invalidMessages = pluginMessagesFor(invalid);
-  for (const expectedNeedle of needles ?? [needle]) {
+  for (const expectedNeedle of needles) {
     if (!invalidMessages.some((m) => m.includes(expectedNeedle))) {
       failures.push(
         `${rule}: expected "${invalid}" to report a plugin diagnostic containing "${expectedNeedle}", ` +
@@ -125,11 +145,11 @@ for (const { rule, needle, needles, ignored } of cases) {
     );
   }
 
-  if (ignored) {
-    const ignoredMessages = pluginMessagesFor(ignored);
+  for (const ignoredFixture of ignored) {
+    const ignoredMessages = pluginMessagesFor(ignoredFixture);
     if (ignoredMessages.length > 0) {
       failures.push(
-        `${rule}: expected "${ignored}" to report no plugin diagnostics, but got: ${JSON.stringify(ignoredMessages)}`
+        `${rule}: expected "${ignoredFixture}" to report no plugin diagnostics, but got: ${JSON.stringify(ignoredMessages)}`
       );
     }
   }

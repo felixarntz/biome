@@ -8,7 +8,7 @@ export const rulesDir = join(
   "rules"
 );
 
-const HEADER_RE = /^\s*(engine|language)\b/;
+const HEADER_RE = /^\s*(?<directive>engine|language)\b/u;
 const IGNORED_GROUPS = new Set(["node_modules"]);
 
 function parse(source) {

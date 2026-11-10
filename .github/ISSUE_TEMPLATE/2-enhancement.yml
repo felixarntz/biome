@@ -1,6 +1,6 @@
 name: Enhancement Request
 description: Suggest an enhancement to an existing feature of `@felixarntz/biome`.
-labels: ['enhancement']
+labels: [ "enhancement" ]
 body:
   - type: markdown
     attributes:

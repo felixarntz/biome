@@ -1,3 +1,5 @@
+export {};
+
 type SomeType = { value: string };
 
 const empty: Record<string, SomeType> = {};
