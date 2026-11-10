@@ -27,7 +27,7 @@ Rules cover aspects like type-safety escape hatches, prototype-chain-safe proper
 | --- | --- |
 | `no-empty-object-accumulator` | `.reduce(..., {})` accumulator seeds, recommending `Object.create(null)` or `Map` for dynamic-key aggregation. |
 | `no-has-own-property` | Direct `obj.hasOwnProperty(key)` calls, recommending `Object.hasOwn(obj, key)` because the method can be missing or shadowed. |
-| `no-in-operator` | The `in` operator and `for...in`, recommending own-property checks and own-key iteration that do not walk the prototype chain. |
+| `no-in-operator` | `in` checks with dynamic keys or `Object.prototype` member names (such as `"constructor"` and `"__proto__"`), plus `for...in` loops, recommending own-property checks and own-key iteration that do not walk the prototype chain. Other string-literal and number-literal keys stay allowed. |
 | `no-object-assign-target` | `Object.assign({}, ...)` plain-object merge targets, recommending `Object.assign(Object.create(null), ...)`. |
 | `no-object-from-entries` | `Object.fromEntries(...)`, which creates a plain object with `Object.prototype` for dynamic keys. |
 | `no-process-env-mutation` | Direct writes, deletes, and `Object.assign(process.env, ...)` calls that mutate process-global environment state. |

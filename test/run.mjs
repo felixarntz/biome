@@ -38,7 +38,7 @@ const cases = [
   { ignored: [], needles: ["hasOwnProperty()"], rule: "no-has-own-property" },
   {
     ignored: [],
-    needles: ["prototype-chain property checks"],
+    needles: ["instead of an `in` check", "instead of `for...in`"],
     rule: "no-in-operator",
   },
   {

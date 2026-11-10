@@ -102,10 +102,18 @@ or {
     register_diagnostic(span=$call, message="Use `Object.hasOwn($obj, key)` instead of calling `hasOwnProperty()` on the object. The method can be missing on null-prototype objects or shadowed by user-controlled properties.")
   },
   or {
-    `$prop in $obj` as $expr,
-    JsForInStatement() as $expr
-  } where {
-    register_diagnostic(span=$expr, message="Avoid prototype-chain property checks and iteration. Use `Object.hasOwn($obj, $prop)` instead of the `in` operator, and `Object.keys()` or `Object.entries()` with `for...of` instead of `for...in`.")
+    JsInExpression(property = $prop) as $expr where {
+      $prop <: not JsPrivateName(),
+      or {
+        $prop <: not or { JsStringLiteralExpression(), JsNumberLiteralExpression() },
+        $prop <: r"^[\x22\x27].*\\.*[\x22\x27]$",
+        $prop <: r"^[\x22\x27](?:constructor|__proto__|hasOwnProperty|isPrototypeOf|propertyIsEnumerable|toLocaleString|toString|valueOf|__defineGetter__|__defineSetter__|__lookupGetter__|__lookupSetter__)[\x22\x27]$"
+      },
+      register_diagnostic(span=$expr, message="Use `Object.hasOwn(obj, key)` instead of an `in` check with a dynamic key or an `Object.prototype` member name. The `in` operator walks the prototype chain, so these checks can match inherited or polluted properties.")
+    },
+    JsForInStatement() as $loop where {
+      register_diagnostic(span=$loop, message="Use `Object.keys()` or `Object.entries()` with `for...of` instead of `for...in`. A `for...in` loop walks the prototype chain and can visit inherited or polluted keys.")
+    }
   },
   `Object.assign($target, $...)` as $call where {
     $target <: `{}`,
