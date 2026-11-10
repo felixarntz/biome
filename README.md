@@ -18,7 +18,7 @@ Rules cover aspects like type-safety escape hatches, prototype-chain-safe proper
 | `no-process-env-mutation` | Direct writes, deletes, and `Object.assign(process.env, ...)` calls that mutate process-global environment state. |
 | `no-prototype-mutation` | `Object.setPrototypeOf(...)` and `Reflect.setPrototypeOf(...)`, which mutate prototype chains. |
 | `no-prototype-property-access` | Direct `obj.__proto__` and `obj.constructor.prototype` access, which are common prototype-pollution primitives. |
-| `prefer-object-parameter` | Functions, methods, and constructors with more than one positional parameter, recommending a single object argument with named parameters instead. A leading TypeScript `this` parameter is not counted. Inline callbacks, whose signature is dictated by the calling API, are left alone. |
+| `require-object-parameter` | Functions, methods, and constructors with more than one positional parameter, requiring a single object argument with named parameters instead. A leading TypeScript `this` parameter is not counted. Inline callbacks, whose signature is dictated by the calling API, are left alone. |
 
 ## Installation
 
@@ -59,7 +59,7 @@ Some of the rules are more opinionated than others. So if you don't want to use 
     "./node_modules/@felixarntz/biome/rules/no-process-env-mutation.grit",
     "./node_modules/@felixarntz/biome/rules/no-prototype-mutation.grit",
     "./node_modules/@felixarntz/biome/rules/no-prototype-property-access.grit",
-    "./node_modules/@felixarntz/biome/rules/prefer-object-parameter.grit"
+    "./node_modules/@felixarntz/biome/rules/require-object-parameter.grit"
   ]
 }
 ```

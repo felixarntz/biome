@@ -48,7 +48,7 @@ const cases = [
   },
   {
     needle: "single object argument with named parameters",
-    rule: "prefer-object-parameter",
+    rule: "require-object-parameter",
   },
 ];
 
