@@ -61,6 +61,13 @@ const cases = [
     needle: "Prefer an optional property",
     rule: "require-optional-properties",
   },
+  {
+    needles: [
+      "Name `AbortSignal` properties `abortSignal`",
+      "Name `AbortController` properties `abortController`",
+    ],
+    rule: "require-explicit-abort-property-names",
+  },
 ];
 
 function lintFixtures() {

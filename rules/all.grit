@@ -4,6 +4,32 @@
 language js
 
 or {
+  or {
+    TsPropertySignatureTypeMember(
+      name = $property_name,
+      type_annotation = TsTypeAnnotation(ty = $property_type)
+    ) as $property where {
+      $property_type <: or {
+        TsReferenceType(name = $type_name),
+        TsUnionType(types = [..., TsReferenceType(name = $type_name), ...])
+      },
+      $type_name <: r"^AbortSignal$",
+      $property_name <: not r"^(?:abortSignal|.+AbortSignal|\x22(?:abortSignal|.+AbortSignal)\x22|\x27(?:abortSignal|.+AbortSignal)\x27)$",
+      register_diagnostic(span=$property, message="Name `AbortSignal` properties `abortSignal` or with a more specific `*AbortSignal` name. Vague names like `signal` obscure what the property represents.")
+    },
+    TsPropertySignatureTypeMember(
+      name = $property_name,
+      type_annotation = TsTypeAnnotation(ty = $property_type)
+    ) as $property where {
+      $property_type <: or {
+        TsReferenceType(name = $type_name),
+        TsUnionType(types = [..., TsReferenceType(name = $type_name), ...])
+      },
+      $type_name <: r"^AbortController$",
+      $property_name <: not r"^(?:abortController|.+AbortController|\x22(?:abortController|.+AbortController)\x22|\x27(?:abortController|.+AbortController)\x27)$",
+      register_diagnostic(span=$property, message="Name `AbortController` properties `abortController` or with a more specific `*AbortController` name. Vague names like `controller` obscure what the property represents.")
+    }
+  },
   // Every arm below binds $params to a parameter items list, then the shared
   // trailing where applies one multi-positional check and emits the diagnostic.
   // The list is deliberately structural: it covers signatures whose author owns
