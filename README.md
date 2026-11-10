@@ -31,6 +31,7 @@ Rules cover aspects like type-safety escape hatches, prototype-chain-safe proper
 | `no-process-env-mutation` | Direct writes, deletes, and `Object.assign(process.env, ...)` calls that mutate process-global environment state. |
 | `no-prototype-mutation` | `Object.setPrototypeOf(...)` and `Reflect.setPrototypeOf(...)`, which mutate prototype chains. |
 | `no-prototype-property-access` | Direct `obj.__proto__` and `obj.constructor.prototype` access, which are common prototype-pollution primitives. |
+| `no-record-object-literal` | String-keyed `Record` values initialized with object literals, recommending `Object.create(null)` when empty or `Object.assign(Object.create(null), data)` when populated. |
 
 ## Installation
 
@@ -86,6 +87,7 @@ Some of the rules are more opinionated than others. So if you don't want to use 
     "./node_modules/@felixarntz/biome/rules/security/no-process-env-mutation.grit",
     "./node_modules/@felixarntz/biome/rules/security/no-prototype-mutation.grit",
     "./node_modules/@felixarntz/biome/rules/security/no-prototype-property-access.grit",
+    "./node_modules/@felixarntz/biome/rules/security/no-record-object-literal.grit",
     "./node_modules/@felixarntz/biome/rules/api-design/require-object-parameter.grit"
   ]
 }

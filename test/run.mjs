@@ -32,6 +32,13 @@ const cases = [
   { needle: "hasOwnProperty()", rule: "no-has-own-property" },
   { needle: "prototype-chain property checks", rule: "no-in-operator" },
   {
+    needles: [
+      "Use `Object.create(null)` instead of `{}`",
+      "Object.assign(Object.create(null), <objectWithDataToAssign>)",
+    ],
+    rule: "no-record-object-literal",
+  },
+  {
     needle: "Object.assign({}, ...)",
     rule: "no-object-assign-target",
   },
@@ -86,16 +93,18 @@ function pluginMessagesFor(fixture) {
 
 const failures = [];
 
-for (const { rule, needle, ignored } of cases) {
+for (const { rule, needle, needles, ignored } of cases) {
   const invalid = `${rule}.invalid.ts`;
   const valid = `${rule}.valid.ts`;
 
   const invalidMessages = pluginMessagesFor(invalid);
-  if (!invalidMessages.some((m) => m.includes(needle))) {
-    failures.push(
-      `${rule}: expected "${invalid}" to report a plugin diagnostic containing "${needle}", ` +
-        `but got: ${JSON.stringify(invalidMessages)}`
-    );
+  for (const expectedNeedle of needles ?? [needle]) {
+    if (!invalidMessages.some((m) => m.includes(expectedNeedle))) {
+      failures.push(
+        `${rule}: expected "${invalid}" to report a plugin diagnostic containing "${expectedNeedle}", ` +
+          `but got: ${JSON.stringify(invalidMessages)}`
+      );
+    }
   }
 
   const validMessages = pluginMessagesFor(valid);

@@ -6,7 +6,7 @@ export const mode = process.env.NODE_ENV;
 export const keyedMode = process.env[key];
 export const childEnv = { ...process.env, NODE_ENV: "test", ...values };
 
-const localEnv: Record<string, string | undefined> = {};
+const localEnv: Record<string, string | undefined> = Object.create(null);
 localEnv.NODE_ENV = "test";
 localEnv[key] = "test";
 delete localEnv.DEBUG;

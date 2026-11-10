@@ -1,0 +1,12 @@
+language js
+
+or {
+  `const $name: Record<string, $type> = $initializer` as $declaration where {
+    $initializer <: JsObjectExpression(members = []),
+    register_diagnostic(span=$declaration, message="Use `Object.create(null)` instead of `{}` for an empty string-keyed `Record`. Plain object literals inherit from `Object.prototype`, exposing dynamic-key records to prototype-pollution behavior.")
+  },
+  `const $name: Record<string, $type> = $initializer` as $declaration where {
+    $initializer <: JsObjectExpression(members = [$first, ...]),
+    register_diagnostic(span=$declaration, message="Use `Object.assign(Object.create(null), <objectWithDataToAssign>)` for a populated string-keyed `Record`. Plain object literals inherit from `Object.prototype`, exposing dynamic-key records to prototype-pollution behavior.")
+  }
+}
